@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Great Vibes', cursive;
+      background: radial-gradient(circle, #ffe6f0 0%, #ffb6c1 100%);
+      overflow-x: hidden;
+      color: #fff;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: url('birthday-cake-candles-bright-lights-600nw-418556503.webp') no-repeat center center/cover;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+
+    .hero h1 {
+      font-size: 4em;
+      color: #fff;
+      z-index: 1;
+      text-shadow: 0 0 15px #ff69b4;
+    }
+
+    .hero p {
+      font-size: 1.5em;
+      z-index: 1;
+      max-width: 700px;
+      margin-top: 1em;
+      color: #ffeaff;
+    }
+
+    .gallery {
+      padding: 3em 1em;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      background: #fff;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2em;
+      font-size: 1.2em;
+      color: #444;
+      background: #ffdde1;
+    }
+
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      background: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #ee5a8c;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 🔊 Music toggle button -->
+<button class="music-btn" onclick="toggleAudio()">🎵 Music</button>
+
+<!-- 🎆 Confetti canvas -->
+<canvas id="confetti"></canvas>
+
+<!-- 🎉 Hero section -->
+<div class="hero">
+  <h1>Happy Birthday, Mani Didi! 🎂</h1>
+  <p>Wishing you a very happy birthday🎉, have a good day and take respect. 🙏</p>
+</div>
+
+<!-- 📸 Gallery -->
+<div class="gallery">
+  <img src="bengali_sweets.jpg" alt="Photo 1">
+  <img src="birthday_thali.jpg" alt="Photo 2">
+  <img src="luchi_cholardal.jpg" alt="Photo 3">
+  <img src="ice_cream.jpg" alt="Photo 4">
+</div>
+
+<!-- ❤️ Footer -->
+<footer>
+  Made with 💖 by Sayak Pal, Have the happiest birthday ever!
+</footer>
+
+<!-- 🎶 Happy Birthday Song -->
+<audio id="bg-audio" autoplay loop>
+  <source src="happy-birthday-254480.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎇 Confetti Script -->
+<script>
+  // Toggle music
+  const audio = document.getElementById("bg-audio");
+  function toggleAudio() {
+    audio.paused ? audio.play() : audio.pause();
+  }
+
+  // Confetti animation
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const numPieces = 150;
+
+  for (let i = 0; i < numPieces; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * numPieces,
+      color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+      tilt: Math.floor(Math.random() * 10) - 10
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach((p, i) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, false);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      p.y += Math.cos(p.d) + 1 + p.r / 2;
+      p.x += Math.sin(p.d) * 2;
+      if (p.y > canvas.height) {
+        p.x = Math.random() * canvas.width;
+        p.y = -10;
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+</body>
+</html>
